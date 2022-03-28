@@ -1,9 +1,9 @@
+import WordCheck from '../wordcheck/WordCheck';
 import React, { FC } from 'react';
 
 const MainScreen: FC = () => {
   return (
-		<div className='d-flex justify-content-center align-items-center'>
-		</div>
+			<WordCheck/>
   );
 };
 
