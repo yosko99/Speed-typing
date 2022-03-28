@@ -24,13 +24,18 @@ const WordCheck: FC = () => {
     navigate('/404', { state: { error } });
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e.target.value === data[wordIndex]) {
-      console.log(true);
       setWordIndex(wordIndex + 1);
-    } else {
-      console.log(false);
+      e.target.value = '';
     }
+  };
+
+  const keyUpHandler = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.code === 'Space' || e.code === 'Enter') {
+      setWordIndex(wordIndex + 1);
+      e.currentTarget.value = '';
+    };
   };
 
   return (
@@ -42,7 +47,7 @@ const WordCheck: FC = () => {
           status={index === wordIndex ? wordStatus : WordStatus.noncurrent}
         />
       ))}
-      <input type='text' onChange={(e) => handleChange(e)} />
+      <input type='text' onChange={(e) => handleChange(e)} onKeyUp={(e) => keyUpHandler(e)}/>
 		</Container>
   );
 };
