@@ -4,3 +4,8 @@ export enum WordStatus {
   completed = 'text-success',
   failed = 'text-danger'
 }
+
+export interface WordType {
+  word: string;
+  status: WordStatus
+}
