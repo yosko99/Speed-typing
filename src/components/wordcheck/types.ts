@@ -9,3 +9,8 @@ export interface WordType {
   word: string;
   status: WordStatus
 }
+
+export interface Title {
+  text: string;
+  warn: boolean;
+}
