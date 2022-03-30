@@ -1,9 +1,11 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
+import diffBetweenStrings from './function/diffBetweenStrings';
 import { WordStatus, WordType, Title } from './types';
 import { useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Loading from '../utils/Loading';
 import axios from 'axios';
+import checkRightBetweenStrings from './function/checkRightBetweenStrings';
 
 const WordCheck: FC = () => {
   const [words, setWords] = useState<WordType[]>([{ word: '', status: WordStatus.noncurrent }]);
@@ -12,12 +14,12 @@ const WordCheck: FC = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [title, setTitle] = useState<Title>({
-    text: 'Start typing :)',
+    text: '',
     warn: false
   });
 
   const checkWord = (str: string) => {
-    if (str === words[wordIndex].word + ' ') {
+    if (str === words[wordIndex].word + ' ' || str === words[wordIndex].word) {
       nextWord(WordStatus.completed);
     } else {
       nextWord(WordStatus.failed);
@@ -26,15 +28,6 @@ const WordCheck: FC = () => {
       text: '',
       warn: false
     });
-  };
-
-  const notifyWrong = (str: string): boolean => {
-    const length = str.length - 1;
-    if (str[length] !== words[wordIndex].word[length] && str[length] !== ' ') {
-      return true;
-    } else {
-      return false;
-    }
   };
 
   const nextWord = (status: WordStatus): void => {
@@ -53,16 +46,21 @@ const WordCheck: FC = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    if (notifyWrong(e.target.value) === true) {
-      setTitle({
-        text: e.target.value,
-        warn: true
-      });
-    } else {
-      setTitle({
-        text: e.target.value,
-        warn: false
-      });
+    const str = e.target.value;
+    const index = diffBetweenStrings(str, words[wordIndex].word);
+    if (str[str.length - 1] !== ' ') {
+      if (index !== 0) {
+        const text = e.target.value.slice(0, str.length - index) + '-'.repeat(index);
+        setTitle({
+          text: text,
+          warn: true
+        });
+      } else {
+        setTitle({
+          text: str,
+          warn: false
+        });
+      }
     }
   };
 
@@ -82,9 +80,15 @@ const WordCheck: FC = () => {
 
   return (
 		<Container>
-      <div className='text-center d-flex justify-content-center align-items-center' style={{ height: '20vh' }}>
-        <h1 className={title.warn ? 'text-danger' : 'text-primary'}>
+      <div className='d-flex justify-content-center align-items-center' style={{ height: '20vh' }}>
+        <h1 className={title.warn ? 'text-danger' : 'text-success'}>
           {title.text}
+        </h1>
+        <h1>
+          {inputField.current !== null &&
+            words[wordIndex].word.slice(
+              checkRightBetweenStrings(inputField.current.value, words[wordIndex].word), words[wordIndex].word.length)
+          }
         </h1>
       </div>
       {loading
