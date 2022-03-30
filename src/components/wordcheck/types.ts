@@ -7,7 +7,8 @@ export enum WordStatus {
 
 export interface WordType {
   word: string;
-  status: WordStatus
+  status: WordStatus;
+  done: boolean;
 }
 
 export interface Title {

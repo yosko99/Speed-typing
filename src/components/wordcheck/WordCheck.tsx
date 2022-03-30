@@ -6,9 +6,14 @@ import { Container } from 'react-bootstrap';
 import Loading from '../utils/Loading';
 import axios from 'axios';
 import checkRightBetweenStrings from './function/checkRightBetweenStrings';
+import HeadText from './components/HeadText';
 
 const WordCheck: FC = () => {
-  const [words, setWords] = useState<WordType[]>([{ word: '', status: WordStatus.noncurrent }]);
+  const [words, setWords] = useState<WordType[]>([{
+    word: '',
+    status: WordStatus.noncurrent,
+    done: false
+  }]);
   const inputField = useRef<HTMLInputElement>(null);
   const [wordIndex, setWordIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -33,6 +38,7 @@ const WordCheck: FC = () => {
   const nextWord = (status: WordStatus): void => {
     const temp = words;
     words[wordIndex].status = status;
+    words[wordIndex].done = true;
     words[wordIndex + 1].status = WordStatus.current;
     setWordIndex(wordIndex + 1);
     setWords(temp);
@@ -79,25 +85,31 @@ const WordCheck: FC = () => {
   }, []);
 
   return (
-		<Container>
-      <div className='d-flex justify-content-center align-items-center' style={{ height: '20vh' }}>
-        <h1 className={title.warn ? 'text-danger' : 'text-success'}>
+		<Container className='d-flex justify-content-center align-items-center flex-column' style={{ height: '80vh' }}>
+      <HeadText />
+      <Container className='fs-2'>
+        {words.map((word: WordType) => (
+          word.done && <span className={word.status + ' m-2'}>{word.word}</span>
+        ))}
+        <span className={title.warn ? 'text-danger' : 'text-success'}>
           {title.text}
-        </h1>
-        <h1>
+        </span>
+        <span>
           {inputField.current !== null &&
             words[wordIndex].word.slice(
               checkRightBetweenStrings(inputField.current.value, words[wordIndex].word), words[wordIndex].word.length)
           }
-        </h1>
-      </div>
-      {loading
-        ? <Loading />
-        : words.map((word: WordType, index: number) => (
-        <p key={index} className={word.status}>
-          {word.word}
-        </p>
-        ))}
+        </span>
+        {loading
+          ? <Loading />
+          : words.map((word: WordType, index: number) => (
+            index > wordIndex
+              ? <span key={index} className={word.status + ' m-2'}>
+            {word.word}
+          </span>
+              : ''
+          ))}
+      </Container>
         <input
           ref={inputField}
           type='text'
