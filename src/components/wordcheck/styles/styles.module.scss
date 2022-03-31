@@ -19,3 +19,21 @@
 .current-word {
 	white-space: nowrap;
 }
+
+.start-typing {
+	animation: bounce 1.5s infinite;
+	margin-top: 1em;
+	margin-bottom: -2em;
+}
+
+@keyframes bounce {
+	0% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}

@@ -27,6 +27,25 @@
         "no-tabs": "off",
         "no-mixed-spaces-and-tabs": "off",
         "no-unused-vars": "warn",
-        "camelcase":"off"
+        "camelcase":"off",
+        "import/order": [
+            "error",
+            {
+              "groups": ["builtin", "external", "internal"],
+              "pathGroups": [
+                {
+                  "pattern": "react",
+                  "group": "external",
+                  "position": "before"
+                }
+              ],
+              "pathGroupsExcludedImportTypes": ["react"],
+              "newlines-between": "always",
+              "alphabetize": {
+                "order": "asc",
+                "caseInsensitive": true
+              }
+            }
+          ]
     }
 }

@@ -1,6 +1,7 @@
-import { LinkContainer } from 'react-router-bootstrap';
-import { Container } from 'react-bootstrap';
 import React, { FC } from 'react';
+
+import { Container } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const Header: FC = () => {
   return (

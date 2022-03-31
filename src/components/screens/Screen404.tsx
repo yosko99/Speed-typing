@@ -1,6 +1,7 @@
-import { useLocation } from 'react-router-dom';
-import { Image } from 'react-bootstrap';
 import React, { FC } from 'react';
+
+import { Image } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
 interface LocationParams {
   state? : {
@@ -13,7 +14,7 @@ const Screen404: FC = () => {
 
   return (
 		<div className='d-flex justify-content-center align-items-center'>
-      <Image src='/error-404.webp' />
+      <Image src='/assets/error-404.webp' />
       {location.state &&
           <h4 className='text-center'>{location.state.error.toString() || ''}</h4>
         }

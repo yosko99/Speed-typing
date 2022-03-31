@@ -1,5 +1,6 @@
-import { Spinner } from 'react-bootstrap';
 import React, { FC } from 'react';
+
+import { Spinner } from 'react-bootstrap';
 
 interface Props {
 	height?: string;

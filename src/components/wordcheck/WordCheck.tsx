@@ -1,13 +1,16 @@
-import checkRightBetweenStrings from './function/checkRightBetweenStrings';
 import React, { FC, useState, useEffect, useRef } from 'react';
-import diffBetweenStrings from './function/diffBetweenStrings';
-import { WordStatus, WordType, Title } from './types';
-import styles from './styles/styles.module.css';
-import { useNavigate } from 'react-router-dom';
-import HeadText from './components/HeadText';
-import { Container } from 'react-bootstrap';
-import Loading from '../utils/Loading';
+
 import axios from 'axios';
+import { Container, Image } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+
+import Loading from '../utils/Loading';
+import HeadText from './components/HeadText';
+import StartTyping from './components/StartTyping';
+import checkRightBetweenStrings from './function/checkRightBetweenStrings';
+import diffBetweenStrings from './function/diffBetweenStrings';
+import styles from './styles/styles.module.css';
+import { WordStatus, WordType, Title } from './types';
 
 const WordCheck: FC = () => {
   const [words, setWords] = useState<WordType[]>([{
@@ -85,10 +88,21 @@ const WordCheck: FC = () => {
     });
   }, []);
 
+  const focusInputField = (): void => {
+    inputField.current?.focus();
+  };
+
+  const [focused, setFocused] = React.useState(false);
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
+
   return (
 		<Container className={styles['center-items'] + 'flex-column'}>
+
       <HeadText />
-      <Container className={'fs-3 my-2 ' + styles['center-items'] + ' ' + styles['input-box']}>
+      <StartTyping focused={focused} />
+
+      <Container onClick={focusInputField} className={'fs-3 my-3 ' + styles['center-items'] + ' ' + styles['input-box']}>
         {/* Completed words */}
         <div className={'justify-content-end ' + styles['words-bar']} >
           {words.map((word: WordType) => (
@@ -102,6 +116,11 @@ const WordCheck: FC = () => {
           <span className={title.warn ? 'text-danger' : 'text-success'}>
             {title.text}
           </span>
+          {focused &&
+          <div className={styles['center-items']}>
+            <img src='/assets/blinking-line.gif' style={{ height: '25px' }} />
+          </div>
+          }
           <span className={WordStatus.current}>
             {inputField.current !== null &&
               words[wordIndex].word.slice(
@@ -125,8 +144,11 @@ const WordCheck: FC = () => {
         </div>
         {/* Following words */}
       </Container>
+
         <input
           // hidden={true}
+          onFocus={onFocus}
+          onBlur={onBlur}
           ref={inputField}
           type='text'
           onChange={(e) => handleChange(e)}
