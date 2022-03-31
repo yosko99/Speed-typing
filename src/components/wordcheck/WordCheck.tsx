@@ -1,12 +1,13 @@
+import checkRightBetweenStrings from './function/checkRightBetweenStrings';
 import React, { FC, useState, useEffect, useRef } from 'react';
 import diffBetweenStrings from './function/diffBetweenStrings';
 import { WordStatus, WordType, Title } from './types';
+import styles from './styles/styles.module.css';
 import { useNavigate } from 'react-router-dom';
+import HeadText from './components/HeadText';
 import { Container } from 'react-bootstrap';
 import Loading from '../utils/Loading';
 import axios from 'axios';
-import checkRightBetweenStrings from './function/checkRightBetweenStrings';
-import HeadText from './components/HeadText';
 
 const WordCheck: FC = () => {
   const [words, setWords] = useState<WordType[]>([{
@@ -53,10 +54,10 @@ const WordCheck: FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const str = e.target.value;
-    const index = diffBetweenStrings(str, words[wordIndex].word);
+    const wrongChars = diffBetweenStrings(str, words[wordIndex].word);
     if (str[str.length - 1] !== ' ') {
-      if (index !== 0) {
-        const text = e.target.value.slice(0, str.length - index) + '-'.repeat(index);
+      if (wrongChars !== 0) {
+        const text = e.target.value.slice(0, str.length - wrongChars) + '-'.repeat(wrongChars);
         setTitle({
           text: text,
           warn: true
@@ -85,32 +86,47 @@ const WordCheck: FC = () => {
   }, []);
 
   return (
-		<Container className='d-flex justify-content-center align-items-center flex-column' style={{ height: '80vh' }}>
+		<Container className={styles['center-items'] + 'flex-column'}>
       <HeadText />
-      <Container className='fs-2'>
-        {words.map((word: WordType) => (
-          word.done && <span className={word.status + ' m-2'}>{word.word}</span>
-        ))}
-        <span className={title.warn ? 'text-danger' : 'text-success'}>
-          {title.text}
-        </span>
-        <span>
-          {inputField.current !== null &&
-            words[wordIndex].word.slice(
-              checkRightBetweenStrings(inputField.current.value, words[wordIndex].word), words[wordIndex].word.length)
-          }
-        </span>
-        {loading
-          ? <Loading />
-          : words.map((word: WordType, index: number) => (
-            index > wordIndex
-              ? <span key={index} className={word.status + ' m-2'}>
-            {word.word}
-          </span>
-              : ''
+      <Container className={'fs-3 my-2 ' + styles['center-items'] + ' ' + styles['input-box']}>
+        {/* Completed words */}
+        <div className={'justify-content-end ' + styles['words-bar']} >
+          {words.map((word: WordType) => (
+            word.done && <span className={word.status + ' m-2'}>{word.word}</span>
           ))}
+        </div>
+        {/* Completed words */}
+
+        {/* Current word */}
+        <div className={'m-2 d-flex justify-content-center ' + styles['current-word']}>
+          <span className={title.warn ? 'text-danger' : 'text-success'}>
+            {title.text}
+          </span>
+          <span className={WordStatus.current}>
+            {inputField.current !== null &&
+              words[wordIndex].word.slice(
+                checkRightBetweenStrings(inputField.current.value, words[wordIndex].word), words[wordIndex].word.length)
+            }
+          </span>
+        </div>
+        {/* Current word */}
+
+        {/* Following words */}
+        <div className={'d-flex ' + styles['words-bar']}>
+          {loading
+            ? <Loading />
+            : words.map((word: WordType, index: number) => (
+              index > wordIndex
+                ? <span key={index} className={word.status + ' m-2'}>
+              {word.word}
+            </span>
+                : ''
+            ))}
+        </div>
+        {/* Following words */}
       </Container>
         <input
+          // hidden={true}
           ref={inputField}
           type='text'
           onChange={(e) => handleChange(e)}

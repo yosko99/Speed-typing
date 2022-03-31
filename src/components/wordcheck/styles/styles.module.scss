@@ -1,0 +1,21 @@
+.center-items {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.input-box {
+	box-shadow: 0 9px 24px rgba(0, 0, 0, 0.12), 0 9px 24px rgba(0, 0, 0, 0.12);
+}
+
+.words-bar {
+	width: 40vw;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: clip;
+	display:flex;
+}
+
+.current-word {
+	white-space: nowrap;
+}
