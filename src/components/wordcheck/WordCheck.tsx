@@ -146,11 +146,11 @@ const WordCheck: FC = () => {
       </Container>
 
         <input
-          // hidden={true}
           onFocus={onFocus}
           onBlur={onBlur}
           ref={inputField}
           type='text'
+          className={styles.hidden}
           onChange={(e) => handleChange(e)}
           onKeyUp={(e) => keyUpHandler(e)}
         />

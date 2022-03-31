@@ -37,3 +37,10 @@
 		transform: translateY(0);
 	}
 }
+
+// out of screen
+.hidden {
+	position: absolute;
+	top: -100vh;
+	left: -100vw;
+}

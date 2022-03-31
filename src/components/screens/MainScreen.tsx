@@ -1,9 +1,13 @@
-import WordCheck from '../wordcheck/WordCheck';
 import React, { FC } from 'react';
+
+import WordCheck from '../wordcheck/WordCheck';
+import styles from './styles/styles.module.css';
 
 const MainScreen: FC = () => {
   return (
-			<WordCheck/>
+    <div className={styles['checkword-background']}>
+     <WordCheck/>
+    </div>
   );
 };
 
