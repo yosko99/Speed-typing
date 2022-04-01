@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
-import RemainingTime from './RemainingTime';
+import RemainingTime from './components/RemainingTime';
 
 interface Props {
 	duration: number;

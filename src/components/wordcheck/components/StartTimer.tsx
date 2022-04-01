@@ -3,6 +3,7 @@ import React, { FC, useState, useEffect, useRef } from 'react';
 import Timer from '../../utils/timer/Timer';
 import styles from '../styles/styles.module.css';
 import { WordType } from '../types';
+import Counter from './counter/Counter';
 
 interface Props {
 	inputFieldValue: string | undefined;
@@ -16,7 +17,7 @@ const StartTimer:FC<Props> = ({ inputFieldValue, words, duration }) => {
   const handleTrigger = () => {
     if (!triggered.current) {
       setTimeout(() => {
-        alert('This is an alert');
+        alert('done');
       }, duration * 1000);
       triggered.current = true;
     }
@@ -33,9 +34,14 @@ const StartTimer:FC<Props> = ({ inputFieldValue, words, duration }) => {
   }, [inputFieldValue]);
 
   return (
-		<div className={styles['center-items'] + ' mb-4'}>
-			<Timer duration={duration} isPlaying={startTimer}/>
-		</div>
+    <>
+      <div className={styles['center-items'] + ' mb-4'}>
+        <Timer duration={duration} isPlaying={startTimer}/>
+      </div>
+      <div>
+        <Counter words={words}/>
+      </div>
+    </>
   );
 };
 

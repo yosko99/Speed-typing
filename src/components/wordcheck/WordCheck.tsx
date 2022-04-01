@@ -5,7 +5,6 @@ import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 import Loading from '../utils/Loading';
-import Timer from '../utils/timer/Timer';
 import HeadText from './components/HeadText';
 import StartTimer from './components/StartTimer';
 import StartTyping from './components/StartTyping';
@@ -103,7 +102,7 @@ const WordCheck: FC = () => {
       <StartTimer
         inputFieldValue={inputField.current?.value}
         words={words}
-        duration={10}
+        duration={50}
       />
       <HeadText />
 
