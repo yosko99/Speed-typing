@@ -1,14 +1,17 @@
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import reportWebVitals from './reportWebVitals';
-import 'axios-progress-bar/dist/nprogress.css';
-import './styles/bootstrap.min.css';
-import ReactDOM from 'react-dom';
 import React from 'react';
-import App from './App';
-import './index.css';
+
 // @ts-ignore
 import { loadProgressBar } from 'axios-progress-bar';
+import ReactDOM from 'react-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+
+import 'axios-progress-bar/dist/nprogress.css';
+import './styles/bootstrap.min.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import './index.css';
 
 loadProgressBar();
 

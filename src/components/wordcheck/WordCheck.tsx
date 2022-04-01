@@ -1,11 +1,13 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 
 import axios from 'axios';
-import { Container, Image } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 import Loading from '../utils/Loading';
+import Timer from '../utils/timer/Timer';
 import HeadText from './components/HeadText';
+import StartTimer from './components/StartTimer';
 import StartTyping from './components/StartTyping';
 import checkRightBetweenStrings from './function/checkRightBetweenStrings';
 import diffBetweenStrings from './function/diffBetweenStrings';
@@ -98,53 +100,59 @@ const WordCheck: FC = () => {
 
   return (
 		<Container className={styles['center-items'] + 'flex-column'}>
-
+      <StartTimer
+        inputFieldValue={inputField.current?.value}
+        words={words}
+        duration={10}
+      />
       <HeadText />
-      <StartTyping focused={focused} />
 
-      <Container onClick={focusInputField} className={'fs-3 my-3 ' + styles['center-items'] + ' ' + styles['input-box']}>
-        {/* Completed words */}
-        <div className={'justify-content-end ' + styles['words-bar']} >
-          {words.map((word: WordType) => (
-            word.done && <span className={word.status + ' m-2'}>{word.word}</span>
-          ))}
-        </div>
-        {/* Completed words */}
-
-        {/* Current word */}
-        <div className={'m-2 d-flex justify-content-center ' + styles['current-word']}>
-          <span className={title.warn ? 'text-danger' : 'text-success'}>
-            {title.text}
-          </span>
-          {focused &&
-          <div className={styles['center-items']}>
-            <img src='/assets/blinking-line.gif' style={{ height: '25px' }} />
+      {loading
+        ? <Loading />
+        : <>
+          <StartTyping focused={focused} />
+          <Container onClick={focusInputField} className={'fs-3 my-3 ' + styles['center-items'] + ' ' + styles['input-box']}>
+          {/* Completed words */}
+          <div className={'justify-content-end ' + styles['words-bar']} >
+            {words.map((word: WordType, index: number) => (
+              word.done && <span key={`completed${index}`} className={word.status + ' m-2'}>{word.word}</span>
+            ))}
           </div>
-          }
-          <span className={WordStatus.current}>
-            {inputField.current !== null &&
-              words[wordIndex].word.slice(
-                checkRightBetweenStrings(inputField.current.value, words[wordIndex].word), words[wordIndex].word.length)
-            }
-          </span>
-        </div>
-        {/* Current word */}
+          {/* Completed words */}
 
-        {/* Following words */}
-        <div className={'d-flex ' + styles['words-bar']}>
-          {loading
-            ? <Loading />
-            : words.map((word: WordType, index: number) => (
+          {/* Current word */}
+          <div className={'m-2 d-flex justify-content-center ' + styles['current-word']}>
+            <span className={title.warn ? 'text-danger' : 'text-success'}>
+              {title.text}
+            </span>
+            {focused &&
+            <div className={styles['center-items']}>
+              <img src='/assets/blinking-line.gif' style={{ height: '25px' }} />
+            </div>
+            }
+            <span className={WordStatus.current}>
+              {inputField.current !== null &&
+                words[wordIndex].word.slice(
+                  checkRightBetweenStrings(inputField.current.value, words[wordIndex].word), words[wordIndex].word.length)
+              }
+            </span>
+          </div>
+          {/* Current word */}
+
+          {/* Following words */}
+          <div className={'d-flex ' + styles['words-bar']}>
+            {words.map((word: WordType, index: number) => (
               index > wordIndex
                 ? <span key={index} className={word.status + ' m-2'}>
-              {word.word}
-            </span>
+                    {word.word}
+                  </span>
                 : ''
             ))}
-        </div>
-        {/* Following words */}
-      </Container>
-
+          </div>
+          {/* Following words */}
+        </Container>
+        </>
+      }
         <input
           onFocus={onFocus}
           onBlur={onBlur}
