@@ -11,13 +11,16 @@ interface Props {
   duration: number;
 }
 const StartTimer:FC<Props> = ({ inputFieldValue, words, duration }) => {
-  const [startTimer, setStartTimer] = useState<boolean>(false);
+  const [start, setStart] = useState<boolean>(false);
   const triggered = useRef<boolean>(false);
+  const finished = useRef<boolean>(false);
 
   const handleTrigger = () => {
     if (!triggered.current) {
       setTimeout(() => {
         alert('done');
+        setStart(false);
+        finished.current = true;
       }, duration * 1000);
       triggered.current = true;
     }
@@ -25,10 +28,10 @@ const StartTimer:FC<Props> = ({ inputFieldValue, words, duration }) => {
 
   useEffect(() => {
     if (inputFieldValue !== '' && inputFieldValue !== undefined) {
-      setStartTimer(true);
+      !finished.current && setStart(true);
       handleTrigger();
     } else if (words.find((word) => word.done)) {
-      setStartTimer(true);
+      !finished.current && setStart(true);
       handleTrigger();
     }
   }, [inputFieldValue]);
@@ -36,10 +39,10 @@ const StartTimer:FC<Props> = ({ inputFieldValue, words, duration }) => {
   return (
     <>
       <div className={styles['center-items'] + ' mb-4'}>
-        <Timer duration={duration} isPlaying={startTimer}/>
+        <Timer duration={duration} isPlaying={start}/>
       </div>
       <div>
-        <Counter words={words}/>
+        <Counter words={words} isCounting={start}/>
       </div>
     </>
   );

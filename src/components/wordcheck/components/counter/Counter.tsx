@@ -6,6 +6,7 @@ import { wordMin, charMin, checkAccuracy } from './function/calculations';
 
 interface Props {
 	words: WordType[];
+	isCounting: boolean;
 }
 
 interface Stats {
@@ -14,7 +15,7 @@ interface Stats {
 	accuracy: number;
 }
 
-const Counter:FC<Props> = ({ words }) => {
+const Counter:FC<Props> = ({ words, isCounting }) => {
   const [stats, setStats] = useState<Stats>({
     wordsPerMin: 0,
     charsPerMin: 0,
@@ -23,7 +24,7 @@ const Counter:FC<Props> = ({ words }) => {
 
   // listen for done words
   useEffect(() => {
-    setStats({
+    isCounting && setStats({
       accuracy: checkAccuracy(words),
       wordsPerMin: wordMin(words),
       charsPerMin: charMin(words)

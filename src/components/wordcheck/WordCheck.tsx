@@ -102,7 +102,7 @@ const WordCheck: FC = () => {
       <StartTimer
         inputFieldValue={inputField.current?.value}
         words={words}
-        duration={50}
+        duration={60}
       />
       <HeadText />
 
