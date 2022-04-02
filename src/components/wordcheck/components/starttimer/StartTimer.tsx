@@ -1,9 +1,10 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 
-import Timer from '../../utils/timer/Timer';
-import styles from '../styles/styles.module.css';
-import { WordType } from '../types';
-import Counter from './counter/Counter';
+import Timer from '../../../utils/timer/Timer';
+import styles from '../../styles/styles.module.css';
+import { WordType } from '../../types';
+import Counter from '../counter/Counter';
+import ShowResults from './components/ShowResults';
 
 interface Props {
 	inputFieldValue: string | undefined;
@@ -11,16 +12,15 @@ interface Props {
   duration: number;
 }
 const StartTimer:FC<Props> = ({ inputFieldValue, words, duration }) => {
+  const [finished, setFinished] = useState<boolean>(false);
   const [start, setStart] = useState<boolean>(false);
   const triggered = useRef<boolean>(false);
-  const finished = useRef<boolean>(false);
 
   const handleTrigger = () => {
     if (!triggered.current) {
       setTimeout(() => {
-        alert('done');
         setStart(false);
-        finished.current = true;
+        setFinished(true);
       }, duration * 1000);
       triggered.current = true;
     }
@@ -28,20 +28,21 @@ const StartTimer:FC<Props> = ({ inputFieldValue, words, duration }) => {
 
   useEffect(() => {
     if (inputFieldValue !== '' && inputFieldValue !== undefined) {
-      !finished.current && setStart(true);
+      !finished && setStart(true);
       handleTrigger();
     } else if (words.find((word) => word.done)) {
-      !finished.current && setStart(true);
+      !finished && setStart(true);
       handleTrigger();
     }
-  }, [inputFieldValue]);
+  }, [inputFieldValue, words.filter((word) => word.done).length]);
 
   return (
     <>
-      <div className={styles['center-items'] + ' mb-4'}>
+      <div className={styles['center-items'] + ' mb-4 flex-column'}>
         <Timer duration={duration} isPlaying={start}/>
+        <ShowResults show={finished} words={words}/>
       </div>
-      <div>
+      <div className='text-center mb-3'>
         <Counter words={words} isCounting={start}/>
       </div>
     </>

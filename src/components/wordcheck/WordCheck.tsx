@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Loading from '../utils/Loading';
 import HeadText from './components/HeadText';
-import StartTimer from './components/StartTimer';
+import StartTimer from './components/starttimer/StartTimer';
 import StartTyping from './components/StartTyping';
 import checkRightBetweenStrings from './function/checkRightBetweenStrings';
 import diffBetweenStrings from './function/diffBetweenStrings';
@@ -76,7 +76,7 @@ const WordCheck: FC = () => {
   };
 
   useEffect(() => {
-    axios.get('https://random-word-api.herokuapp.com/word?number=10').then((response) => {
+    axios.get('https://random-word-api.herokuapp.com/word?number=300').then((response) => {
       setWords(response.data.map((word: string, index: number) => {
         return {
           word: word,
@@ -102,7 +102,7 @@ const WordCheck: FC = () => {
       <StartTimer
         inputFieldValue={inputField.current?.value}
         words={words}
-        duration={60}
+        duration={3}
       />
       <HeadText />
 

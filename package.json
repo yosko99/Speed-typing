@@ -17,6 +17,7 @@
     "react-countdown-circle-timer": "^3.0.9",
     "react-dom": "^17.0.2",
     "react-query": "^3.34.19",
+    "react-reveal": "^1.2.2",
     "react-router-bootstrap": "^0.26.1",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
