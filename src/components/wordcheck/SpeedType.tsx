@@ -2,13 +2,13 @@ import React, { FC } from 'react';
 
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
+import Screen404 from '../screens/Screen404';
 import Loading from '../utils/Loading';
 import WordCheck from './WordCheck';
 
 const SpeedType: FC = () => {
-  const navigate = useNavigate();
   const { language } = useParams();
 
   const { isLoading, isError, error, data } = useQuery(['words', language],
@@ -18,8 +18,9 @@ const SpeedType: FC = () => {
   if (isLoading) {
     return <Loading/>;
   }
-  if (isError || data === undefined) {
-    navigate('/404', { state: { error } });
+  if (isError) {
+    const err = error as Error;
+    return <Screen404 error={err.message}/>;
   }
 
   return (

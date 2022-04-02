@@ -1,22 +1,17 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import { Image } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 
-interface LocationParams {
-  state? : {
-    error: any
-  }
+interface Props {
+  error?: string;
 }
 
-const Screen404: FC = () => {
-  const location = useLocation() as LocationParams;
-
+const Screen404: FC<Props> = ({ error }) => {
   return (
-		<div className='d-flex justify-content-center align-items-center'>
+		<div className='d-flex justify-content-center align-items-center flex-column'>
       <Image src='/assets/error-404.webp' />
-      {location.state &&
-          <h4 className='text-center'>{location.state.error.toString() || ''}</h4>
+      {error !== undefined &&
+          <h4 className='text-center'>{error}</h4>
         }
     </div>
   );
