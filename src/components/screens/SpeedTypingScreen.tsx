@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 
-import WordCheck from '../wordcheck/WordCheck';
+import SpeedType from '../wordcheck/SpeedType';
 import styles from './styles/styles.module.css';
 
-const MainScreen: FC = () => {
+const SpeedTypingScreen: FC = () => {
   return (
     <div className={styles['checkword-background']}>
-     <WordCheck/>
+     <SpeedType/>
     </div>
   );
 };
 
-export default MainScreen;
+export default SpeedTypingScreen;

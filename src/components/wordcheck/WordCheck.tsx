@@ -1,10 +1,7 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 
-import axios from 'axios';
 import { Container } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 
-import Loading from '../utils/Loading';
 import HeadText from './components/HeadText';
 import StartTimer from './components/starttimer/StartTimer';
 import StartTyping from './components/StartTyping';
@@ -13,20 +10,22 @@ import diffBetweenStrings from './function/diffBetweenStrings';
 import styles from './styles/styles.module.css';
 import { WordStatus, WordType, Title } from './types';
 
-const WordCheck: FC = () => {
+interface Props {
+  data: string[];
+}
+
+const WordCheck: FC<Props> = ({ data }) => {
+  const inputField = useRef<HTMLInputElement>(null);
+  const [wordIndex, setWordIndex] = useState(0);
+  const [title, setTitle] = useState<Title>({
+    text: '',
+    warn: false
+  });
   const [words, setWords] = useState<WordType[]>([{
     word: '',
     status: WordStatus.noncurrent,
     done: false
   }]);
-  const inputField = useRef<HTMLInputElement>(null);
-  const [wordIndex, setWordIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const [title, setTitle] = useState<Title>({
-    text: '',
-    warn: false
-  });
 
   const checkWord = (str: string) => {
     if (str === words[wordIndex].word + ' ' || str === words[wordIndex].word) {
@@ -76,17 +75,13 @@ const WordCheck: FC = () => {
   };
 
   useEffect(() => {
-    axios.get('https://random-word-api.herokuapp.com/word?number=300').then((response) => {
-      setWords(response.data.map((word: string, index: number) => {
-        return {
-          word: word,
-          status: index === wordIndex ? WordStatus.current : WordStatus.noncurrent
-        };
-      }));
-      setLoading(false);
-    }).catch((error) => {
-      navigate('/404', { state: { error } });
-    });
+    setWords(data.map((word: string, index: number) => {
+      return {
+        word: word,
+        status: index === wordIndex ? WordStatus.current : WordStatus.noncurrent,
+        done: false
+      };
+    }));
   }, []);
 
   const focusInputField = (): void => {
@@ -98,17 +93,15 @@ const WordCheck: FC = () => {
   const onBlur = () => setFocused(false);
 
   return (
-		<Container className={styles['center-items'] + 'flex-column'}>
+		<Container className={styles['center-items'] + ' flex-column'}>
       <StartTimer
         inputFieldValue={inputField.current?.value}
         words={words}
-        duration={3}
+        duration={60}
       />
       <HeadText />
 
-      {loading
-        ? <Loading />
-        : <>
+         <>
           <StartTyping focused={focused} />
           <Container onClick={focusInputField} className={'fs-3 my-3 ' + styles['center-items'] + ' ' + styles['input-box']}>
           {/* Completed words */}
@@ -151,7 +144,6 @@ const WordCheck: FC = () => {
           {/* Following words */}
         </Container>
         </>
-      }
         <input
           onFocus={onFocus}
           onBlur={onBlur}
