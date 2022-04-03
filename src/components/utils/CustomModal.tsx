@@ -25,7 +25,9 @@ const CustomModal:FC<Props> = ({ btnText, title, body, reloadOnClose = false }) 
 			<Modal show={show} onHide={handleHide}>
 				<Modal.Dialog>
 					<Modal.Header closeButton>
-						<Modal.Title>{title}</Modal.Title>
+						<Modal.Title>
+							{title}
+						</Modal.Title>
 					</Modal.Header>
 
 					<Modal.Body>
@@ -33,7 +35,9 @@ const CustomModal:FC<Props> = ({ btnText, title, body, reloadOnClose = false }) 
 					</Modal.Body>
 
 					<Modal.Footer>
-						<Button variant="secondary" onClick={handleHide}>Close</Button>
+						<Button variant="secondary" onClick={handleHide}>
+							Close
+						</Button>
 					</Modal.Footer>
 				</Modal.Dialog>
 			</Modal>

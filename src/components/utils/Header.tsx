@@ -8,7 +8,7 @@ const Header: FC = () => {
 		<header className='bg-black'>
 			<Container>
 				<LinkContainer to='/'>
-					<h3 className='py-1 text-white user-select-none'>
+					<h3 className='py-1 text-white'>
 						<i role='button'>
 							Typing Test
 						</i>

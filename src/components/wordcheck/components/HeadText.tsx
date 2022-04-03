@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-const HeadText = () => {
+const HeadText: FC = () => {
   return (
 		<div className='text-center'>
 			<p className='text-uppercase text-muted m-0'>Typing speed test</p>

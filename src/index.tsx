@@ -11,8 +11,6 @@ import './styles/bootstrap.min.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import './index.css';
-
 loadProgressBar();
 
 const queryClient = new QueryClient({

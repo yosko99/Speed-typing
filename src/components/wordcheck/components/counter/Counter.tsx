@@ -1,6 +1,8 @@
 import React, { FC, useState, useEffect } from 'react';
 
-import styles from '../../styles/styles.module.css';
+import styled from 'styled-components';
+
+import CenteredItems from '../../../../styles/CenteredItems';
 import { WordType } from '../../types';
 import { wordMin, charMin, checkAccuracy } from './function/calculations';
 
@@ -14,6 +16,15 @@ interface Stats {
 	charsPerMin: number;
 	accuracy: number;
 }
+
+const StatBtn = styled(CenteredItems)`
+	border-radius: 20px;
+	background-color: rgb(231, 231, 231);
+	font-size: 2em;
+	width:75px;
+	height:75px;
+	margin:0 1em 0 1em;
+`;
 
 const Counter:FC<Props> = ({ words, isCounting }) => {
   const [stats, setStats] = useState<Stats>({
@@ -32,20 +43,26 @@ const Counter:FC<Props> = ({ words, isCounting }) => {
   }, [words.filter((word) => word.done).length]);
 
   return (
-		<div className={styles['center-items']}>
-			<div className={styles['center-items'] + ' flex-column'}>
-				<p className={styles['stat-button'] + ' ' + styles['center-items']}>{stats.wordsPerMin}</p>
-				<p>words/min</p>
-			</div>
-			<div className={styles['center-items'] + ' flex-column'}>
-				<p className={styles['stat-button'] + ' ' + styles['center-items']}>{stats.charsPerMin}</p>
-				<p>char/min</p>
-			</div>
-			<div className={styles['center-items'] + ' flex-column'}>
-				<p className={styles['stat-button'] + ' ' + styles['center-items']}>{stats.accuracy}</p>
-				<p>%accuracy</p>
-			</div>
-		</div>
+		<CenteredItems>
+			<CenteredItems flexColumn>
+					<StatBtn>
+						{stats.wordsPerMin}
+					</StatBtn>
+					<p>words/min</p>
+			</CenteredItems>
+			<CenteredItems flexColumn>
+					<StatBtn>
+						{stats.charsPerMin}
+					</StatBtn>
+					<p>chars/min</p>
+			</CenteredItems>
+			<CenteredItems flexColumn>
+					<StatBtn>
+						{stats.accuracy}
+					</StatBtn>
+					<p>%accuracy</p>
+			</CenteredItems>
+		</CenteredItems>
   );
 };
 

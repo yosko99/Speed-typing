@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 
+import CenteredItems from '../../../../styles/CenteredItems';
 import Timer from '../../../utils/timer/Timer';
-import styles from '../../styles/styles.module.css';
 import { WordStatus, WordType } from '../../types';
 import Counter from '../counter/Counter';
 import ShowResults from './components/ShowResults';
@@ -44,10 +44,10 @@ const StartTimer:FC<Props> = ({ inputFieldValue, words, duration }) => {
 
   return (
     <>
-      <div className={styles['center-items'] + ' mb-4 flex-column'}>
+      <CenteredItems flexColumn className='mb-4'>
         <Timer duration={duration} isPlaying={start}/>
         <ShowResults show={finished} results={completedWords.current}/>
-      </div>
+      </CenteredItems>
       <div className='text-center mb-3'>
         <Counter words={words} isCounting={start}/>
       </div>

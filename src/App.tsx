@@ -7,10 +7,12 @@ import Screen404 from './components/screens/Screen404';
 import SpeedTypingScreen from './components/screens/SpeedTypingScreen';
 import Footer from './components/utils/Footer';
 import Header from './components/utils/Header';
+import GlobalCSS from './styles/global.css';
 
 function App () {
   return (
     <Router>
+      <GlobalCSS/>
       <Header />
       <main style={{ minHeight: '90vh' }}>
         <Routes>

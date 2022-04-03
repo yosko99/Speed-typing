@@ -1,6 +1,8 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 import { Image } from 'react-bootstrap';
+
+import CenteredItems from '../../styles/CenteredItems';
 
 interface Props {
   error?: string;
@@ -8,12 +10,15 @@ interface Props {
 
 const Screen404: FC<Props> = ({ error }) => {
   return (
-		<div className='d-flex justify-content-center align-items-center flex-column'>
-      <Image src='/assets/error-404.webp' />
-      {error !== undefined &&
-          <h4 className='text-center'>{error}</h4>
-        }
-    </div>
+      <CenteredItems flexColumn>
+        <Image src='/assets/error-404.webp' />
+        {error !== undefined &&
+            <h4 className='text-center'>
+              {error}
+            </h4>
+          }
+          <h1>asd</h1>
+      </CenteredItems>
   );
 };
 

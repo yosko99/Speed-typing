@@ -28,7 +28,9 @@ const ShowResults: FC<Props> = ({ show, results }) => {
 							body={
 								<>
 									<Image fluid src='/assets/wow.gif' />
-									<p className='fs-5 mt-3'>{body}</p>
+									<p className='fs-5 mt-3'>
+										{body}
+									</p>
 								</>
 							}
 						/>

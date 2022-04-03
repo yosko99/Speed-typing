@@ -11,7 +11,7 @@ interface Props {
 
 const Timer:FC<Props> = ({ duration, isPlaying }) => {
   return (
-		<div className="timer-wrapper">
+		<div>
 		<CountdownCircleTimer
 			isPlaying={isPlaying}
 			duration={duration}
