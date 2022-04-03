@@ -21,6 +21,7 @@ const LanguageSelect: FC = () => {
 					<Zoom bottom>
 						<LinkContainer to={`/speedtype/${flag}`}>
 							<Image
+								role='button'
 								alt={flag}
 								fluid
 								className='cursor-pointer'

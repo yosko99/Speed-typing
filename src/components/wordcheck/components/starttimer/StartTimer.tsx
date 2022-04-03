@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect, useRef } from 'react';
 
 import Timer from '../../../utils/timer/Timer';
 import styles from '../../styles/styles.module.css';
-import { WordType } from '../../types';
+import { WordStatus, WordType } from '../../types';
 import Counter from '../counter/Counter';
 import ShowResults from './components/ShowResults';
 
@@ -15,12 +15,18 @@ const StartTimer:FC<Props> = ({ inputFieldValue, words, duration }) => {
   const [finished, setFinished] = useState<boolean>(false);
   const [start, setStart] = useState<boolean>(false);
   const triggered = useRef<boolean>(false);
+  const completedWords = useRef<WordType[]>([{
+    done: false,
+    status: WordStatus.noncurrent,
+    word: ''
+  }]);
 
   const handleTrigger = () => {
     if (!triggered.current) {
       setTimeout(() => {
         setStart(false);
         setFinished(true);
+        completedWords.current = words.filter((word) => word.status === WordStatus.completed);
       }, duration * 1000);
       triggered.current = true;
     }
@@ -40,7 +46,7 @@ const StartTimer:FC<Props> = ({ inputFieldValue, words, duration }) => {
     <>
       <div className={styles['center-items'] + ' mb-4 flex-column'}>
         <Timer duration={duration} isPlaying={start}/>
-        <ShowResults show={finished} words={words}/>
+        <ShowResults show={finished} results={completedWords.current}/>
       </div>
       <div className='text-center mb-3'>
         <Counter words={words} isCounting={start}/>

@@ -9,7 +9,7 @@ const Header: FC = () => {
 			<Container>
 				<LinkContainer to='/'>
 					<h3 className='py-1 text-white user-select-none'>
-						<i>
+						<i role='button'>
 							Typing Test
 						</i>
 					</h3>

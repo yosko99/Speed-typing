@@ -10,11 +10,11 @@ import { wordMin, charMin, checkAccuracy } from '../../counter/function/calculat
 
 interface Props {
 	show: boolean;
-	words: WordType[]
+	results: WordType[];
 }
 
-const ShowResults: FC<Props> = ({ show, words }) => {
-  const body = `Well... you typed with the speed of ${wordMin(words)} WPM (${charMin(words)} CPM). Your accuracy was ${checkAccuracy(words)}%.`;
+const ShowResults: FC<Props> = ({ show, results }) => {
+  const body = `Well... you typed with the speed of ${wordMin(results)} WPM (${charMin(results)} CPM). Your accuracy was ${checkAccuracy(results)}%.`;
 
   return (
 		<div>
